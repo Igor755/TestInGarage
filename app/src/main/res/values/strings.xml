@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">TestInGarage</string>
+    <string name="Name">Name:</string>
+    <string name="Last_name">Last Name:</string>
+    <string name="Email">Email:</string>
+    <string name="name">name</string>
+    <string name="last_name">last_name</string>
+    <string name="email">email</string>
+    <string name="Contact">Contact</string>
+    <string name="Contacts">Contacts</string>
+    <string name="Delete">Delete</string>
+    <string name="Detail">Detail</string>
+
+
+
+</resources>

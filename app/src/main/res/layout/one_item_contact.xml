@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+
+        android:id="@+id/relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:layout_marginEnd="@dimen/medium_margin">
+
+        <TextView
+            android:id="@+id/tranView"
+            style="@style/TextViewOffersMedium"
+            android:text="@string/Contact"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:id="@+id/pointMenu"
+            android:src="@drawable/ic_point_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:scaleType="fitXY"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:layout_marginEnd="@dimen/medium_margin"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/small_padding"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="@dimen/small_width_l"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/photo_user" />
+
+        </LinearLayout>
+
+
+        <!--2 block-->
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/big_padding"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+
+                <TextView
+
+                    style="@style/TextViewOffersMedium"
+                    android:layout_marginEnd="@dimen/big_line"
+                    android:textColor="@color/grey_dark"
+                    android:text="@string/Name"/>
+
+                <TextView
+
+                    style="@style/TextViewOffersMedium"
+                    android:id="@+id/name"
+                    android:text="@string/name" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    style="@style/TextViewOffersMedium"
+                    android:layout_marginEnd="@dimen/big_line"
+                    android:textColor="@color/grey_dark"
+                    android:text="@string/Last_name" />
+
+                <TextView
+                    style="@style/TextViewOffersMedium"
+                    android:id="@+id/lastName"
+                    android:text="@string/last_name" />
+
+            </LinearLayout>
+
+
+
+            <LinearLayout style="@style/linearLayoutLittle">
+
+                <TextView
+
+                    style="@style/TextViewOffersLittle"
+                    android:layout_marginEnd="@dimen/big_line"
+                    android:textColor="@color/grey_dark"
+                    android:text="@string/Email" />
+
+                <TextView
+
+                    style="@style/TextViewOffersLittle"
+                    android:id="@+id/email"
+                    android:text="@string/email" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/medium_margin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <View style="@style/ViewLine" />
+
+    </LinearLayout>
+
+</LinearLayout>

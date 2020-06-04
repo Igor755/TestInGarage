@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:id="@+id/toolbar_main_activity"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    app:theme="@style/ToolBarMainActivity">
+
+  <!--  <ImageView
+        android:id="@+id/ivToolbarBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center"
+        android:layout_weight="0.1"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_arrow_left" />-->
+
+    <TextView
+        android:id="@+id/tvToolbarName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_weight="0.9"
+        android:text="@string/Contacts"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+</LinearLayout>

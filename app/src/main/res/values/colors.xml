@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="grey_dark">#cfcfcf</color>
+    <dimen name="small_text">12sp</dimen>
+    <color name="grey_very_dark">#838383</color>
+    <color name="grey_light">#efefef</color>
+    <color name="white">#fff</color>
+
+</resources>
