@@ -2,8 +2,11 @@ package com.sonikpalms.testingarage.adapter
 
 import android.os.Build
 import android.view.*
+import android.widget.ImageView
 import android.widget.PopupMenu
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.sonikpalms.testingarage.R
 import com.sonikpalms.testingarage.pojo.Contact
 import kotlinx.android.synthetic.main.one_item_contact.view.*
@@ -35,8 +38,20 @@ class AdapterContacts (var list: MutableList<Contact>) : RecyclerView.Adapter<Ad
         private var view : View = v
         private var contact : Contact? = null
 
+        private var user_image: ImageView? = null
+        private var user_name: TextView? = null
+        private var last_name: TextView? = null
+        private var email: TextView? = null
+
+
+
         init {
             v.setOnClickListener(this)
+            user_image = itemView.findViewById(R.id.image)
+            user_name = itemView.findViewById(R.id.name)
+            last_name = itemView.findViewById(R.id.lastName)
+            email = itemView.findViewById(R.id.email)
+
         }
         override fun onClick(v: View) {
             onItemClickListener?.invoke(adapterPosition, v)
@@ -44,6 +59,14 @@ class AdapterContacts (var list: MutableList<Contact>) : RecyclerView.Adapter<Ad
 
         fun bind(contact: Contact) {
             this.contact = contact
+
+
+            user_name?.text = contact.user_name
+            last_name?.text = contact.last_name
+            email?.text = contact.email
+            Glide.with(view.context).load(contact.user_image).into(view.image)
+
+
 
             view.pointMenu.setOnClickListener {
 
@@ -77,7 +100,7 @@ class AdapterContacts (var list: MutableList<Contact>) : RecyclerView.Adapter<Ad
                     }
                     true
                 }
-               // popup.inflate(R.menu.popup_offer_menu)
+                popup.inflate(R.menu.popup_offer_menu)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     popup.gravity = Gravity.END
                 }

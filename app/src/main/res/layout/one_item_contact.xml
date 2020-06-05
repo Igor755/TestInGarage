@@ -8,6 +8,18 @@
     android:layout_height="wrap_content">
 
 
+   <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:layout_margin="4dp"
+
+       android:elevation="4dp">
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="vertical">
+
     <RelativeLayout
 
         android:id="@+id/relative"
@@ -16,11 +28,7 @@
         android:layout_marginStart="@dimen/medium_margin"
         android:layout_marginEnd="@dimen/medium_margin">
 
-        <TextView
-            android:id="@+id/tranView"
-            style="@style/TextViewOffersMedium"
-            android:text="@string/Contact"
-            android:layout_centerVertical="true"/>
+
 
         <ImageView
             android:id="@+id/pointMenu"
@@ -137,9 +145,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
-
         <View style="@style/ViewLine" />
 
     </LinearLayout>
+
+       </LinearLayout>
+
+   </androidx.cardview.widget.CardView>
 
 </LinearLayout>

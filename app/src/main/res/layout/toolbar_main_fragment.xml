@@ -12,14 +12,7 @@
     android:layout_height="?attr/actionBarSize"
     app:theme="@style/ToolBarMainActivity">
 
-  <!--  <ImageView
-        android:id="@+id/ivToolbarBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left|center"
-        android:layout_weight="0.1"
-        android:visibility="gone"
-        app:srcCompat="@drawable/ic_arrow_left" />-->
+
 
     <TextView
         android:id="@+id/tvToolbarName"
@@ -30,5 +23,13 @@
         android:text="@string/Contacts"
         android:textColor="@color/white"
         android:textSize="20sp" />
+
+
+  <ImageView
+      android:id="@+id/refresh"
+      android:layout_width="wrap_content"
+      android:layout_marginRight="20dp"
+      android:layout_height="wrap_content"
+      app:srcCompat="@drawable/refresh" />
 
 </LinearLayout>
