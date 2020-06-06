@@ -1,14 +1,17 @@
 package com.sonikpalms.testingarage.fragments
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sonikpalms.testingarage.R
 import com.sonikpalms.testingarage.adapter.AdapterContacts
 import com.sonikpalms.testingarage.pojo.Contact
@@ -18,29 +21,60 @@ import kotlinx.android.synthetic.main.toolbar_main_fragment.*
 
 class MainFragment : Fragment() {
 
-    val databaseHelper = this.context?.let { DatabaseHelper(it) }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return  inflater.inflate(R.layout.fragment_main, container, false)
+    private var databaseHelper = this.context?.let { DatabaseHelper(it) }
+    var mAdapter = AdapterContacts(emptyArray<Contact>().toMutableList())
+
+    companion object {
+        val listContacts: ArrayList<Contact> = ArrayList()
+
     }
 
-    @SuppressLint("WrongConstant")
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_main, container, false)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        databaseHelper = context?.let { DatabaseHelper(it) }
 
+        first()
 
         refresh.setOnClickListener {
             context?.let { it1 -> databaseHelper?.dropDb(it1) }
+            listContacts.clear()
             first()
             Toast.makeText(context, "dropDb", Toast.LENGTH_SHORT).show()
         }
 
+        mAdapter = AdapterContacts(listContacts)
+        // mAdapter.refreshContactList(list)
+        mAdapter.onItemClickListener = { pos, _ ->
+            val fragment: DialogFragment = DetailFragment()
+            val bundle = Bundle()
+            val contact: Contact = listContacts[pos]
+            bundle.putSerializable("contact", contact)
+            bundle.putInt("position", pos)
+            fragment.arguments = bundle
+            activity?.supportFragmentManager?.let { fragment.show(it, "DetailFragment") }
+
+
+        }
+        rvContacts!!.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+        rvContacts!!.adapter = mAdapter
+
 
     }
-    @SuppressLint("WrongConstant")
-    fun first(){
-        if (databaseHelper?.proverka() == 0){
+
+    fun first() {
+        if (databaseHelper?.proverka() == 0) {
+
             val contact = Contact(R.drawable.avatar, "Igor", "Metlin", "Metlin@rambler.ru")
             val contact1 = Contact(R.drawable.avatar, "Alex", "Smith", "Smith@yandex.ru")
             val contact2 = Contact(R.drawable.avatar, "Johnny", "Williams", "Williams@gmail.ru")
@@ -49,32 +83,62 @@ class MainFragment : Fragment() {
             val contact5 = Contact(R.drawable.avatar, "Evie", "Lewis", "Lewis@ukr.net")
 
 
-            databaseHelper?.insertData(contact)
-            databaseHelper?.insertData(contact1)
-            databaseHelper?.insertData(contact2)
-            databaseHelper?.insertData(contact3)
-            databaseHelper?.insertData(contact5)
+            databaseHelper!!.insertData(contact)
+            databaseHelper!!.insertData(contact1)
+            databaseHelper!!.insertData(contact2)
+            databaseHelper!!.insertData(contact3)
+            databaseHelper!!.insertData(contact4)
+            databaseHelper!!.insertData(contact5)
 
 
-            val list : ArrayList<Contact>  = ArrayList()
-            list.add(contact)
-            list.add(contact1)
-            list.add(contact2)
-            list.add(contact3)
-            list.add(contact4)
-            list.add(contact5)
+            listContacts.add(contact)
+            listContacts.add(contact1)
+            listContacts.add(contact2)
+            listContacts.add(contact3)
+            listContacts.add(contact4)
+            listContacts.add(contact5)
+            //setAdapter(listContacts)
+            mAdapter.notifyDataSetChanged()
 
 
-            val mAdapter = AdapterContacts(list)
-            //mAdapter.refreshContactList(list)
-            rvContacts!!.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
-            rvContacts!!.adapter = mAdapter
-        }else{
-        /*    var data = databaseHelper.readData
-            for (i in 0..(data.si))*/
+        } else {
+            val data = databaseHelper?.readData()
+            if (data != null) {
+                for (i in 0 until data.size) {
+                    listContacts.add(data[i])
+                }
+
+                // setAdapter(listContacts)
+
+                mAdapter.notifyDataSetChanged()
+            }
         }
 
     }
 
+    /*    @SuppressLint("WrongConstant")
+    fun setAdapter(list: ArrayList<Contact>) {
+        val mAdapter = AdapterContacts(list)
+        // mAdapter.refreshContactList(list)
+        mAdapter.onItemClickListener = { pos, _ ->
+            val fragment: DialogFragment = DetailFragment()
+            val bundle = Bundle()
+            val contact: Contact = list[pos]
+            bundle.putSerializable("contact", contact)
+            bundle.putInt("position", pos)
+            fragment.arguments = bundle
+            activity?.supportFragmentManager?.let { fragment.show(it, "DetailFragment") }
+
+
+        }
+        rvContacts!!.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+        rvContacts!!.adapter = mAdapter
+
+    }*/
+    fun update(pos: Int, contact: Contact){
+        listContacts[pos] = contact
+        mAdapter.notifyItemChanged(pos)
+
+    }
 
 }

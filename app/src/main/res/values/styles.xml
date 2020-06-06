@@ -23,6 +23,23 @@
         <item name="android:textSize">10sp</item>
     </style>
 
+    <style name="CategoryStyle">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">100dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+
+
+    <style name="EditorFieldStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
+
 
     <style name="TextViewOffersMedium" >
         <item name="android:layout_width">wrap_content</item>

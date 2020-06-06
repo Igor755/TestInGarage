@@ -11,6 +11,8 @@
     <string name="Delete">Delete</string>
     <string name="Detail">Detail</string>
 
+    <string name="SAVE">SAVE</string>
+    <string name="cancel">Cancel</string>
 
 
 </resources>

@@ -1,30 +1,50 @@
 package com.sonikpalms.testingarage.adapter
 
+import android.content.Context
 import android.os.Build
+import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.sonikpalms.testingarage.MainActivity
 import com.sonikpalms.testingarage.R
+import com.sonikpalms.testingarage.fragments.DetailFragment
+import com.sonikpalms.testingarage.fragments.MainFragment
 import com.sonikpalms.testingarage.pojo.Contact
+import com.sonikpalms.testingarage.sqllite.DatabaseHelper
 import kotlinx.android.synthetic.main.one_item_contact.view.*
 
-class AdapterContacts (var list: MutableList<Contact>) : RecyclerView.Adapter<AdapterContacts.RecyclerViewHolder>() {
+class AdapterContacts(var list: MutableList<Contact>) :
+    RecyclerView.Adapter<AdapterContacts.RecyclerViewHolder>() {
 
     var onItemClickListener: ((pos: Int, aView: View) -> Unit)? = null
-    private var contactList : List<Contact> = ArrayList()
+    private var contactList: List<Contact> = ArrayList()
 
+    constructor() : this(emptyArray<Contact>().toMutableList())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
-        return RecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.one_item_contact,parent,false))
+        return RecyclerViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.one_item_contact, parent, false)
+        )
     }
+
     override fun getItemCount(): Int = list.size
 
     fun refreshContactList(list: MutableList<Contact>) {
         this.list = list
         notifyDataSetChanged()
+
+    }
+    fun refreshOneItem(position: Int, contact: Contact){
+        list.set(position, contact)
+        notifyItemChanged(position, contact)
+        notifyDataSetChanged()
+       // notifyDataSetChanged()
+
     }
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
@@ -33,16 +53,15 @@ class AdapterContacts (var list: MutableList<Contact>) : RecyclerView.Adapter<Ad
     }
 
 
-    inner class RecyclerViewHolder(v: View) : RecyclerView.ViewHolder(v) , View.OnClickListener {
+    inner class RecyclerViewHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
 
-        private var view : View = v
-        private var contact : Contact? = null
+        private var view: View = v
+        private var contact: Contact? = null
 
         private var user_image: ImageView? = null
         private var user_name: TextView? = null
         private var last_name: TextView? = null
         private var email: TextView? = null
-
 
 
         init {
@@ -53,6 +72,7 @@ class AdapterContacts (var list: MutableList<Contact>) : RecyclerView.Adapter<Ad
             email = itemView.findViewById(R.id.email)
 
         }
+
         override fun onClick(v: View) {
             onItemClickListener?.invoke(adapterPosition, v)
         }
@@ -70,32 +90,23 @@ class AdapterContacts (var list: MutableList<Contact>) : RecyclerView.Adapter<Ad
 
             view.pointMenu.setOnClickListener {
 
-
                 val popup: PopupMenu
                 val wrapper = ContextThemeWrapper(view.pointMenu.context, R.style.popupMenu)
                 popup = PopupMenu(wrapper, view.pointMenu)
-
-
-
                 popup.setOnMenuItemClickListener { item: MenuItem? ->
                     when (item?.itemId) {
                         R.id.delete -> {
-                           /* val dialog   =  OfferAcceptDialog()
-                            val activity =  itemView.context as? MainActivity
-                            activity?.supportFragmentManager?.let { it1 -> dialog.show(it1, "OfferAcceptDialog") }*/
+                            val databaseHelper = itemView.context?.let { DatabaseHelper(it) }
+                            databaseHelper?.deleteData(contact.user_id)
+                            val data = databaseHelper?.readData()
+                            list.clear()
+                            if (data != null) {
+                                for (i in 0 until data.size) {
+                                    list.add(data[i])
+                                }
+                            }
+                            refreshContactList(list)
                         }
-                        R.id.detail -> {
-                            /*//TODO ("just test my auto dialog fragment, delete in future")
-                            //val dialog   =  OfferMyAuto()
-                            val activity =  itemView.context as? MainActivity
-                            //activity?.supportFragmentManager?.let { it1 -> dialog.show(it1, "OfferMyAuto") }
-
-                            val resultragment = OfferScreenFragment()
-                            val transaction = activity?.supportFragmentManager?.beginTransaction()
-                            transaction?.replace(R.id.fragment_container, resultragment)
-                            transaction?.commit()*/
-                        }
-
 
                     }
                     true
@@ -104,8 +115,6 @@ class AdapterContacts (var list: MutableList<Contact>) : RecyclerView.Adapter<Ad
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     popup.gravity = Gravity.END
                 }
-
-
                 popup.show()
 
             }

@@ -30,13 +30,7 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         db.insert(TABLE_NAME, null, contentValues)
     }
 
-    fun updateData(
-        id: String,
-        image: Int,
-        name: String,
-        last_name: String,
-        email: String
-    ): Boolean {
+    fun updateData(id: String, image: Int, name: String, last_name: String, email: String): Boolean {
 
         val db = this.writableDatabase
         val contentValues = ContentValues()
@@ -79,8 +73,9 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
     fun proverka(): Int {
 
         val db = this.writableDatabase
-        val cursor: Cursor = db.rawQuery("select * from" + TABLE_NAME, null)
+        val cursor: Cursor = db.rawQuery("select * from " + TABLE_NAME, null)
         Log.e("a", "" + cursor.count)
+        cursor.close()
         return cursor.count
     }
 
