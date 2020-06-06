@@ -64,6 +64,7 @@ class DetailFragment : DialogFragment() {
                     MainFragment.listContacts.add(data[i])
                 }
             }
+
             MainFragment().update(position, contact)
             dismiss()
 

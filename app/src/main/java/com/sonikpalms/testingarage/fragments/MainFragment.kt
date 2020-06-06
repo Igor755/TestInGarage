@@ -27,20 +27,20 @@ class MainFragment : Fragment() {
 
     companion object {
         val listContacts: ArrayList<Contact> = ArrayList()
+        var recyclerView: RecyclerView? = null
 
     }
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return    inflater.inflate(R.layout.fragment_main, container, false)
     }
 
+    @SuppressLint("WrongConstant")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        recyclerView  =  view.findViewById(R.id.rvContacts)
 
         databaseHelper = context?.let { DatabaseHelper(it) }
 
@@ -54,7 +54,6 @@ class MainFragment : Fragment() {
         }
 
         mAdapter = AdapterContacts(listContacts)
-        // mAdapter.refreshContactList(list)
         mAdapter.onItemClickListener = { pos, _ ->
             val fragment: DialogFragment = DetailFragment()
             val bundle = Bundle()
@@ -62,12 +61,11 @@ class MainFragment : Fragment() {
             bundle.putSerializable("contact", contact)
             bundle.putInt("position", pos)
             fragment.arguments = bundle
-            activity?.supportFragmentManager?.let { fragment.show(it, "DetailFragment") }
-
+            childFragmentManager.let { fragment.show(it, "DetailFragment") }
 
         }
-        rvContacts!!.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
-        rvContacts!!.adapter = mAdapter
+        recyclerView?.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+        recyclerView?.adapter = mAdapter
 
 
     }
@@ -97,7 +95,6 @@ class MainFragment : Fragment() {
             listContacts.add(contact3)
             listContacts.add(contact4)
             listContacts.add(contact5)
-            //setAdapter(listContacts)
             mAdapter.notifyDataSetChanged()
 
 
@@ -107,37 +104,18 @@ class MainFragment : Fragment() {
                 for (i in 0 until data.size) {
                     listContacts.add(data[i])
                 }
-
-                // setAdapter(listContacts)
-
+                
                 mAdapter.notifyDataSetChanged()
             }
         }
 
     }
 
-    /*    @SuppressLint("WrongConstant")
-    fun setAdapter(list: ArrayList<Contact>) {
-        val mAdapter = AdapterContacts(list)
-        // mAdapter.refreshContactList(list)
-        mAdapter.onItemClickListener = { pos, _ ->
-            val fragment: DialogFragment = DetailFragment()
-            val bundle = Bundle()
-            val contact: Contact = list[pos]
-            bundle.putSerializable("contact", contact)
-            bundle.putInt("position", pos)
-            fragment.arguments = bundle
-            activity?.supportFragmentManager?.let { fragment.show(it, "DetailFragment") }
 
-
-        }
-        rvContacts!!.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
-        rvContacts!!.adapter = mAdapter
-
-    }*/
     fun update(pos: Int, contact: Contact){
         listContacts[pos] = contact
-        mAdapter.notifyItemChanged(pos)
+        mAdapter.list = listContacts
+        recyclerView?.adapter?.notifyItemChanged(pos, contact)
 
     }
 
