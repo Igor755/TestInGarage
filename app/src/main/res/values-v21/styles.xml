@@ -20,4 +20,11 @@
         <item name="android:dropDownHorizontalOffset">@dimen/big_padding</item>
 
     </style>
+
+    <style name="ToolBarMainActivity" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
 </resources>
