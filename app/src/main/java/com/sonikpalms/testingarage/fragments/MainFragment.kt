@@ -1,7 +1,6 @@
 package com.sonikpalms.testingarage.fragments
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,6 @@ import com.sonikpalms.testingarage.R
 import com.sonikpalms.testingarage.adapter.AdapterContacts
 import com.sonikpalms.testingarage.pojo.Contact
 import com.sonikpalms.testingarage.sqllite.DatabaseHelper
-import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.toolbar_main_fragment.*
 
 class MainFragment : Fragment() {
@@ -44,12 +42,12 @@ class MainFragment : Fragment() {
 
         databaseHelper = context?.let { DatabaseHelper(it) }
 
-        first()
+        firststart()
 
         refresh.setOnClickListener {
             context?.let { it1 -> databaseHelper?.dropDb(it1) }
             listContacts.clear()
-            first()
+            firststart()
             Toast.makeText(context, "dropDb", Toast.LENGTH_SHORT).show()
         }
 
@@ -70,8 +68,8 @@ class MainFragment : Fragment() {
 
     }
 
-    fun first() {
-        if (databaseHelper?.proverka() == 0) {
+    fun firststart() {
+        if (databaseHelper?.checkDB() == 0) {
 
             val contact = Contact(R.drawable.avatar, "Igor", "Metlin", "Metlin@rambler.ru")
             val contact1 = Contact(R.drawable.avatar, "Alex", "Smith", "Smith@yandex.ru")
@@ -104,7 +102,7 @@ class MainFragment : Fragment() {
                 for (i in 0 until data.size) {
                     listContacts.add(data[i])
                 }
-                
+
                 mAdapter.notifyDataSetChanged()
             }
         }

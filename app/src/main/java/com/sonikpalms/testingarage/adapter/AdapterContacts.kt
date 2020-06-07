@@ -22,9 +22,7 @@ class AdapterContacts(var list: MutableList<Contact>) :
     RecyclerView.Adapter<AdapterContacts.RecyclerViewHolder>() {
 
     var onItemClickListener: ((pos: Int, aView: View) -> Unit)? = null
-    private var contactList: List<Contact> = ArrayList()
 
-    constructor() : this(emptyArray<Contact>().toMutableList())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         return RecyclerViewHolder(
@@ -37,13 +35,6 @@ class AdapterContacts(var list: MutableList<Contact>) :
     fun refreshContactList(list: MutableList<Contact>) {
         this.list = list
         notifyDataSetChanged()
-
-    }
-    fun refreshOneItem(position: Int, contact: Contact){
-        list.set(position, contact)
-        notifyItemChanged(position, contact)
-        notifyDataSetChanged()
-       // notifyDataSetChanged()
 
     }
 

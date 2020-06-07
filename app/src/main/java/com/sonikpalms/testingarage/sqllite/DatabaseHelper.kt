@@ -49,11 +49,6 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return db.delete(TABLE_NAME, "ID = ?", arrayOf(id))
     }
 
-    val allData: Cursor
-        get() {
-            val db = this.writableDatabase
-            return db.rawQuery("SELECT * FROM " + TABLE_NAME, null)
-        }
 
     companion object {
         val DATABASE_NAME = "contacts.db"
@@ -70,7 +65,7 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
     }
 
-    fun proverka(): Int {
+    fun checkDB(): Int {
 
         val db = this.writableDatabase
         val cursor: Cursor = db.rawQuery("select * from " + TABLE_NAME, null)

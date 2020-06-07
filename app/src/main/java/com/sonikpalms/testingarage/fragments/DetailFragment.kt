@@ -1,15 +1,12 @@
 package com.sonikpalms.testingarage.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sonikpalms.testingarage.R
-import com.sonikpalms.testingarage.adapter.AdapterContacts
 import com.sonikpalms.testingarage.pojo.Contact
 import com.sonikpalms.testingarage.sqllite.DatabaseHelper
 import kotlinx.android.synthetic.main.fragment_dialog_change_contact.*
@@ -18,14 +15,9 @@ import kotlinx.android.synthetic.main.fragment_dialog_change_contact.*
 class DetailFragment : DialogFragment() {
 
     private var databaseHelper = this.context?.let { DatabaseHelper(it) }
-    private val newList: ArrayList<Contact> = ArrayList()
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_dialog_change_contact, container, false)
 
     }
@@ -53,7 +45,6 @@ class DetailFragment : DialogFragment() {
             contact.email = edit_email.text.toString()
 
             databaseHelper = context?.let { DatabaseHelper(it) }
-
             databaseHelper?.updateData(contact.user_id, contact.user_image, contact.user_name, contact.last_name, contact.email)
 
             MainFragment.listContacts.clear()
@@ -64,7 +55,6 @@ class DetailFragment : DialogFragment() {
                     MainFragment.listContacts.add(data[i])
                 }
             }
-
             MainFragment().update(position, contact)
             dismiss()
 
